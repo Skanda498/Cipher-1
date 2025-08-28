@@ -1,0 +1,148 @@
+cat > ~/Cipher-1/public/css/style.css << 'EOF'
+/* Modern Video Call App Styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.app-container {
+  display: flex;
+  width: 95%;
+  max-width: 1200px;
+  height: 85vh;
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 300px;
+  background: #2c3e50;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  color: #ecf0f1;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+#contact-list li {
+  padding: 12px;
+  margin: 8px 0;
+  background: #34495e;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#contact-list li:hover {
+  background: #3498db;
+}
+
+.chat-box {
+  flex-grow: 1;
+  background: #ecf0f1;
+  border-radius: 8px;
+  margin: 10px 0;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+#chat-input {
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+#send-chat {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#send-chat:hover {
+  background: #2980b9;
+}
+
+/* Main Content Styling */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background: #ecf0f1;
+}
+
+.video-container {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2c3e50;
+  position: relative;
+}
+
+#local-video {
+  width: 200px;
+  height: 150px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border: 3px solid white;
+  border-radius: 10px;
+}
+
+#remote-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.controls {
+  padding: 20px;
+  background: white;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.controls button {
+  padding: 15px 25px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+#start-call { background: #27ae60; color: white; }
+#end-call { background: #e74c3c; color: white; }
+#mute-audio { background: #f39c12; color: white; }
+#mute-video { background: #9b59b6; color: white; }
+
+.controls button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+EOF

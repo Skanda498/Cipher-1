@@ -1,0 +1,75 @@
+2025-08-23T17:47:18Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
+2025-08-23T17:47:18Z INF Requesting new quick Tunnel on trycloudflare.com...
+2025-08-23T17:47:23Z INF +--------------------------------------------------------------------------------------------+
+2025-08-23T17:47:23Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+2025-08-23T17:47:23Z INF |  https://fruits-probably-horrible-blue.trycloudflare.com                                   |
+2025-08-23T17:47:23Z INF +--------------------------------------------------------------------------------------------+
+2025-08-23T17:47:23Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]
+2025-08-23T17:47:23Z INF Version 2025.8.1 (Checksum e0a87f493be5164d010906e1d7feb94280c71b7ed938f9c6aadf6aca166494da)
+2025-08-23T17:47:23Z INF GOOS: android, GOVersion: go1.24.5, GoArch: arm64
+2025-08-23T17:47:23Z INF Settings: map[ha-connections:1 protocol:quic url:http://localhost:3000]
+2025-08-23T17:47:23Z INF Autoupdate frequency is set autoupdateFreq=86400000
+2025-08-23T17:47:23Z ERR Failed to fetch features, default to disable error="lookup cfd-features.argotunnel.com on [::1]:53: read udp [::1]:53172->[::1]:53: read: connection refused"
+2025-08-23T17:47:23Z INF Generated Connector ID: ee354732-f7ed-4290-a21e-2bd0b1d2cd40
+2025-08-23T17:47:23Z WRN Unable to lookup protocol percentage.
+2025-08-23T17:47:23Z INF Initial protocol quic
+2025-08-23T17:47:23Z INF ICMP proxy will use 192.168.0.109 as source for IPv4
+2025-08-23T17:47:23Z INF ICMP proxy will use :: as source for IPv6
+2025-08-23T17:47:23Z WRN The user running cloudflared process has a GID (group ID) that is not within ping_group_range. You might need to add that user to a group within that range, or instead update the range to encompass a group the user is already in by modifying /proc/sys/net/ipv4/ping_group_range. Otherwise cloudflared will not be able to ping this network error="open /proc/sys/net/ipv4/ping_group_range: permission denied"
+2025-08-23T17:47:23Z ERR Cannot determine default origin certificate path. No file cert.pem in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]. You need to specify the origin certificate path by specifying the origincert option in the configuration file, or set TUNNEL_ORIGIN_CERT environment variable originCertPath=
+2025-08-23T17:47:23Z INF ICMP proxy will use 192.168.0.109 as source for IPv4
+2025-08-23T17:47:23Z INF ICMP proxy will use :: as source for IPv6
+2025-08-23T17:47:23Z INF Starting metrics server on 127.0.0.1:20241/metrics
+2025-08-23T17:47:23Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveP256] connIndex=0 event=0 ip=198.41.192.167
+2025-08-23T17:47:23Z ERR Failed to initialize DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:47466->[::1]:53: read: connection refused"
+2025-08-23T17:47:23Z INF Registered tunnel connection connIndex=0 connection=45bb62a1-2fec-4c95-bb6c-03039dcacf5b event=0 ip=198.41.192.167 location=blr02 protocol=quic
+2025-08-23T17:52:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:56638->[::1]:53: read: connection refused"
+2025-08-23T17:57:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:57773->[::1]:53: read: connection refused"
+2025-08-23T18:02:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:42600->[::1]:53: read: connection refused"
+2025-08-23T18:07:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:60939->[::1]:53: read: connection refused"
+2025-08-23T18:12:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:57970->[::1]:53: read: connection refused"
+2025-08-23T18:17:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:57868->[::1]:53: read: connection refused"
+2025-08-23T18:22:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:44305->[::1]:53: read: connection refused"
+2025-08-23T18:27:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:35363->[::1]:53: read: connection refused"
+2025-08-23T18:35:11Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:36863->[::1]:53: read: connection refused"
+2025-08-23T18:40:11Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:53285->[::1]:53: read: connection refused"
+2025-08-23T18:45:11Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:48340->[::1]:53: read: connection refused"
+2025-08-23T18:50:10Z ERR Failed to refresh feature selector error="lookup cfd-features.argotunnel.com on [::1]:53: read udp [::1]:51608->[::1]:53: read: connection refused"
+2025-08-23T18:50:11Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:38755->[::1]:53: read: connection refused"
+2025-08-23T18:55:11Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:33357->[::1]:53: read: connection refused"
+2025-08-23T19:02:22Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:52636->[::1]:53: read: connection refused"
+2025-08-23T19:09:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:48604->[::1]:53: read: connection refused"
+2025-08-23T19:14:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:50660->[::1]:53: read: connection refused"
+2025-08-23T19:19:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:49541->[::1]:53: read: connection refused"
+2025-08-23T19:24:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:49337->[::1]:53: read: connection refused"
+2025-08-23T19:29:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:37714->[::1]:53: read: connection refused"
+2025-08-23T19:34:24Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:52065->[::1]:53: read: connection refused"
+2025-08-23T19:39:24Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:38236->[::1]:53: read: connection refused"
+2025-08-23T19:44:24Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:41202->[::1]:53: read: connection refused"
+2025-08-23T19:49:24Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:55279->[::1]:53: read: connection refused"
+2025-08-23T19:54:22Z ERR Failed to refresh feature selector error="lookup cfd-features.argotunnel.com on [::1]:53: read udp [::1]:38700->[::1]:53: read: connection refused"
+2025-08-23T19:54:24Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:55405->[::1]:53: read: connection refused"
+2025-08-23T19:59:24Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:40028->[::1]:53: read: connection refused"
+2025-08-23T20:04:24Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:58047->[::1]:53: read: connection refused"
+2025-08-23T20:09:24Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:38438->[::1]:53: read: connection refused"
+2025-08-23T20:14:24Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:48900->[::1]:53: read: connection refused"
+2025-08-23T20:19:24Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:40902->[::1]:53: read: connection refused"
+2025-08-23T20:24:24Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:39948->[::1]:53: read: connection refused"
+2025-08-23T20:31:05Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:59225->[::1]:53: read: connection refused"
+2025-08-23T20:36:05Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:51355->[::1]:53: read: connection refused"
+2025-08-23T20:41:05Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:51283->[::1]:53: read: connection refused"
+2025-08-23T20:46:05Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:53157->[::1]:53: read: connection refused"
+2025-08-23T20:51:05Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:33198->[::1]:53: read: connection refused"
+2025-08-23T21:00:25Z ERR Failed to refresh feature selector error="lookup cfd-features.argotunnel.com on [::1]:53: read udp [::1]:38976->[::1]:53: read: connection refused"
+2025-08-23T21:00:32Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:39394->[::1]:53: read: connection refused"
+2025-08-23T21:07:43Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:52227->[::1]:53: read: connection refused"
+2025-08-23T21:20:26Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:33949->[::1]:53: read: connection refused"
+2025-08-23T21:33:57Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:51341->[::1]:53: read: connection refused"
+2025-08-23T21:41:33Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:56728->[::1]:53: read: connection refused"
+2025-08-23T21:46:33Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:42317->[::1]:53: read: connection refused"
+2025-08-23T21:51:33Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:46092->[::1]:53: read: connection refused"
+2025-08-23T21:56:33Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:34866->[::1]:53: read: connection refused"
+2025-08-23T22:08:25Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:43683->[::1]:53: read: connection refused"
+2025-08-23T22:21:07Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:47831->[::1]:53: read: connection refused"
+2025-08-23T22:34:42Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:43532->[::1]:53: read: connection refused"
+2025-08-23T22:48:23Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:47295->[::1]:53: read: connection refused"

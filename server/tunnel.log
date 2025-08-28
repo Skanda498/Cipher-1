@@ -1,0 +1,55 @@
+2025-08-23T16:25:42Z INF Thank you for trying Cloudflare Tunnel. Doing so, without a Cloudflare account, is a quick way to experiment and try it out. However, be aware that these account-less Tunnels have no uptime guarantee, are subject to the Cloudflare Online Services Terms of Use (https://www.cloudflare.com/website-terms/), and Cloudflare reserves the right to investigate your use of Tunnels for violations of such terms. If you intend to use Tunnels in production you should use a pre-created named tunnel by following: https://developers.cloudflare.com/cloudflare-one/connections/connect-apps
+2025-08-23T16:25:42Z INF Requesting new quick Tunnel on trycloudflare.com...
+2025-08-23T16:25:47Z INF +--------------------------------------------------------------------------------------------+
+2025-08-23T16:25:47Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+2025-08-23T16:25:47Z INF |  https://ratios-houston-widespread-loading.trycloudflare.com                               |
+2025-08-23T16:25:47Z INF +--------------------------------------------------------------------------------------------+
+2025-08-23T16:25:47Z INF Cannot determine default configuration path. No file [config.yml config.yaml] in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]
+2025-08-23T16:25:47Z INF Version 2025.8.1 (Checksum e0a87f493be5164d010906e1d7feb94280c71b7ed938f9c6aadf6aca166494da)
+2025-08-23T16:25:47Z INF GOOS: android, GOVersion: go1.24.5, GoArch: arm64
+2025-08-23T16:25:47Z INF Settings: map[ha-connections:1 protocol:quic url:http://localhost:3000]
+2025-08-23T16:25:47Z INF Autoupdate frequency is set autoupdateFreq=86400000
+2025-08-23T16:25:47Z ERR Failed to fetch features, default to disable error="lookup cfd-features.argotunnel.com on [::1]:53: read udp [::1]:51385->[::1]:53: read: connection refused"
+2025-08-23T16:25:47Z INF Generated Connector ID: 7ddb62f6-6d9f-4cc8-b366-9a20a2b2a3cc
+2025-08-23T16:25:47Z WRN Unable to lookup protocol percentage.
+2025-08-23T16:25:47Z INF Initial protocol quic
+2025-08-23T16:25:47Z INF ICMP proxy will use 192.168.0.109 as source for IPv4
+2025-08-23T16:25:47Z INF ICMP proxy will use :: as source for IPv6
+2025-08-23T16:25:47Z WRN The user running cloudflared process has a GID (group ID) that is not within ping_group_range. You might need to add that user to a group within that range, or instead update the range to encompass a group the user is already in by modifying /proc/sys/net/ipv4/ping_group_range. Otherwise cloudflared will not be able to ping this network error="open /proc/sys/net/ipv4/ping_group_range: permission denied"
+2025-08-23T16:25:47Z ERR Cannot determine default origin certificate path. No file cert.pem in [~/.cloudflared ~/.cloudflare-warp ~/cloudflare-warp /etc/cloudflared /usr/local/etc/cloudflared]. You need to specify the origin certificate path by specifying the origincert option in the configuration file, or set TUNNEL_ORIGIN_CERT environment variable originCertPath=
+2025-08-23T16:25:47Z INF ICMP proxy will use 192.168.0.109 as source for IPv4
+2025-08-23T16:25:47Z INF ICMP proxy will use :: as source for IPv6
+2025-08-23T16:25:47Z INF Starting metrics server on 127.0.0.1:20245/metrics
+2025-08-23T16:25:48Z INF Tunnel connection curve preferences: [X25519MLKEM768 CurveP256] connIndex=0 event=0 ip=198.41.200.23
+2025-08-23T16:25:48Z ERR Failed to initialize DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:34360->[::1]:53: read: connection refused"
+2025-08-23T16:25:48Z INF Registered tunnel connection connIndex=0 connection=30d29eac-3402-425c-94f6-795cc525c8d3 event=0 ip=198.41.200.23 location=bom11 protocol=quic
+2025-08-23T16:30:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:46408->[::1]:53: read: connection refused"
+2025-08-23T16:35:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:35419->[::1]:53: read: connection refused"
+2025-08-23T16:40:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:40307->[::1]:53: read: connection refused"
+2025-08-23T16:45:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:60473->[::1]:53: read: connection refused"
+2025-08-23T16:50:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:40875->[::1]:53: read: connection refused"
+2025-08-23T16:55:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:55253->[::1]:53: read: connection refused"
+2025-08-23T17:00:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:35699->[::1]:53: read: connection refused"
+2025-08-23T17:05:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:39233->[::1]:53: read: connection refused"
+2025-08-23T17:10:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:49018->[::1]:53: read: connection refused"
+2025-08-23T17:15:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:57045->[::1]:53: read: connection refused"
+2025-08-23T17:20:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:48295->[::1]:53: read: connection refused"
+2025-08-23T17:25:47Z ERR Failed to refresh feature selector error="lookup cfd-features.argotunnel.com on [::1]:53: read udp [::1]:48798->[::1]:53: read: connection refused"
+2025-08-23T17:25:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:43319->[::1]:53: read: connection refused"
+2025-08-23T17:30:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:34816->[::1]:53: read: connection refused"
+2025-08-23T17:35:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:42366->[::1]:53: read: connection refused"
+2025-08-23T17:40:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:55512->[::1]:53: read: connection refused"
+2025-08-23T17:45:48Z ERR Failed to refresh DNS local resolver error="lookup region1.v2.argotunnel.com on [::1]:53: read udp [::1]:33368->[::1]:53: read: connection refused"
+202025-08-23T17:47:18Z INF Initiating graceful shutdown due to signal terminated ..202025-08-23T17:47:19Z ERR failed to run the datagram handler error="context canceled" connIndex=0 event=0 ip=198.41.200.113
+2025-08-23T17:47:19Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.200.20252025-08-23T17:47:19Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.200.113
+2025-08-23T17:47:19Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.202025-02025-08-23T17:47:19Z ERR Connection terminated connIndex=0
+2025-08-23T17:47:19Z ERR no more connections active and exiting
+2025-08-23T17:47:19Z INF Tunnel server st2025-02025-08-23T17:47:19Z INF Metrics server stopped
+er error="context canceled" connIndex=0 event=0 ip=198.41.192.227
+2025-08-23T17:47:19Z ERR failed to serve tunnel connection error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.227
+2025-08-23T17:47:19Z ERR Serve tunnel error error="accept stream listener encountered a failure while serving" connIndex=0 event=0 ip=198.41.192.227
+2025-08-23T17:47:19Z INF Retrying connection in up to 1s connIndex=0 event=0 ip=198.41.192.227
+2025-08-23T17:47:19Z ERR Connection terminated connIndex=0
+2025-08-23T17:47:19Z ERR no more connections active and exiting
+2025-08-23T17:47:19Z INF Tunnel server stopped
+2025-08-23T17:47:19Z INF Metrics server stopped
