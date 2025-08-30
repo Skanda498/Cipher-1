@@ -1,0 +1,10 @@
+    await peerConnection.setRemoteDescription(answer);
+});
+
+socket.on("iceCandidate", async (candidate) => {
+    try {
+        await peerConnection.addIceCandidate(candidate);
+    } catch (e) {
+        console.error("Error adding received ICE candidate", e);
+    }
+});

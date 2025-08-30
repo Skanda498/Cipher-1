@@ -1,90 +1,155 @@
+const express = require('express');
 const http = require('http');
-const url = require('url');
-const querystring = require('querystring');
+const socketIo = require('socket.io');
+const path = require('path');
 const db = require('./database');
 
-const server = http.createServer(async (req, res) => {
-    const parsedUrl = url.parse(req.url);
-    const path = parsedUrl.pathname;
-    
-    // Set CORS headers to allow frontend communication
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    
-    // Handle preflight requests
-    if (req.method === 'OPTIONS') {
-        res.writeHead(200);
-        res.end();
-        return;
-    }
-    
-    // Handle registration
-    if (path === '/register' && req.method === 'POST') {
-        let body = '';
-        req.on('data', chunk => body += chunk);
-        req.on('end', async () => {
-            try {
-                const { email, password } = querystring.parse(body);
-                const user = await db.createUser(email, password);
-                
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ 
-                    success: true, 
-                    message: 'User created successfully!',
-                    user: { email: user.email, id: user.id }
-                }));
-            } catch (error) {
-                res.writeHead(400, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ 
-                    success: false, 
-                    message: error.message 
-                }));
-            }
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
+
+// Serve static files from public directory
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Handle registration
+app.post('/register', express.urlencoded({ extended: true }), async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await db.createUser(email, password);
+
+        res.json({
+            success: true,
+            message: 'User created successfully!',
+            user: { email: user.email, id: user.id }
         });
-    }
-    
-    // Handle login
-    else if (path === '/login' && req.method === 'POST') {
-        let body = '';
-        req.on('data', chunk => body += chunk);
-        req.on('end', async () => {
-            try {
-                const { email, password } = querystring.parse(body);
-                const isValid = await db.verifyUser(email, password);
-                
-                if (isValid) {
-                    res.writeHead(200, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ 
-                        success: true, 
-                        message: 'Login successful!',
-                        user: { email: email }
-                    }));
-                } else {
-                    res.writeHead(401, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ 
-                        success: false, 
-                        message: 'Invalid email or password' 
-                    }));
-                }
-            } catch (error) {
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ 
-                    success: false, 
-                    message: 'Server error during login' 
-                }));
-            }
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error.message
         });
-    }
-    
-    // Handle other routes
-    else {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ success: false, message: 'Endpoint not found' }));
     }
 });
 
-const PORT = 3001;
-server.listen(PORT, '0.0.0.0', () => {
-    console.log(`✅ API Server running on http://localhost:${PORT}`);
+// Handle login
+app.post('/login', express.urlencoded({ extended: true }), async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const isValid = await db.verifyUser(email, password);
+
+        if (isValid) {
+            res.json({
+                success: true,
+                message: 'Login successful!',
+                user: { email: email }
+            });
+        } else {
+            res.status(401).json({
+                success: false,
+                message: 'Invalid email or password'
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Server error during login'
+        });
+    }
+});
+
+// Socket.io connection handling
+io.on('connection', (socket) => {
+    console.log('User connected:', socket.id);
+
+    // Handle user registration for chat
+    socket.on('register', (username) => {
+        socket.username = username;
+        socket.broadcast.emit('userJoined', username);
+        io.emit('updateUsers', getConnectedUsers());
+    });
+
+    // Handle chat messages
+    socket.on('chatMessage', (data) => {
+        io.emit('message', {
+            username: socket.username,
+            message: data.message,
+            timestamp: new Date().toISOString()
+        });
+    });
+
+    // Handle typing indicators
+    socket.on('typing', () => {
+        socket.broadcast.emit('userTyping', socket.username);
+    });
+
+    socket.on('stopTyping', () => {
+        socket.broadcast.emit('userStoppedTyping');
+    });
+
+    // WebRTC signaling
+    socket.on('offer', (data) => {
+        socket.to(data.target).emit('offer', {
+            offer: data.offer,
+            sender: socket.id
+        });
+    });
+
+    socket.on('answer', (data) => {
+        socket.to(data.target).emit('answer', {
+            answer: data.answer,
+            sender: socket.id
+        });
+    });
+
+    socket.on('ice-candidate', (data) => {
+        socket.to(data.target).emit('ice-candidate', {
+            candidate: data.candidate,
+            sender: socket.id
+        });
+    });
+
+    socket.on('callUser', (data) => {
+        socket.to(data.target).emit('callMade', {
+            offer: data.offer,
+            sender: socket.id,
+            username: socket.username,
+            isVideo: data.isVideo
+        });
+    });
+
+    socket.on('endCall', (data) => {
+        socket.to(data.target).emit('callEnded', {
+            sender: socket.id
+        });
+    });
+
+    socket.on('rejectCall', (data) => {
+        socket.to(data.target).emit('callRejected', {
+            sender: socket.id
+        });
+    });
+
+    // Handle disconnection
+    socket.on('disconnect', () => {
+        if (socket.username) {
+            socket.broadcast.emit('userLeft', socket.username);
+            io.emit('updateUsers', getConnectedUsers());
+        }
+        console.log('User disconnected:', socket.id);
+    });
+});
+
+// Helper function to get connected users
+function getConnectedUsers() {
+    const users = [];
+    io.sockets.sockets.forEach(socket => {
+        if (socket.username) {
+            users.push(socket.username);
+        }
+    });
+    return users;
+}
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });

@@ -1,20 +1,45 @@
+// server.js
+const express = require('express');
 const http = require('http');
-const fs = require('fs');
+const { Server } = require('socket.io');
 const path = require('path');
 
-const server = http.createServer((req, res) => {
-    const filePath = path.join(__dirname, 'public', 'index.html');
-    fs.readFile(filePath, (error, content) => {
-        if (error) {
-            res.writeHead(404);
-            res.end('File not found. Check: public/index.html');
-        } else {
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(content, 'utf-8');
-        }
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+const PORT = 3000;
+
+// Serve static files from 'public' folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Handle chat messages
+io.on('connection', (socket) => {
+    console.log('A user connected');
+
+    // Chat messages
+    socket.on('chatMessage', (msg) => {
+        io.emit('chatMessage', msg);
+    });
+
+    // WebRTC signaling
+    socket.on('offer', (offer) => {
+        socket.broadcast.emit('offer', offer);
+    });
+
+    socket.on('answer', (answer) => {
+        socket.broadcast.emit('answer', answer);
+    });
+
+    socket.on('ice-candidate', (candidate) => {
+        socket.broadcast.emit('ice-candidate', candidate);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('A user disconnected');
     });
 });
 
-server.listen(3000, '0.0.0.0', () => {
-    console.log('Server running at http://localhost:3000/');
+server.listen(PORT, () => {
+    console.log(`Cipher 1 Test Server running at http://localhost:${PORT}/`);
 });

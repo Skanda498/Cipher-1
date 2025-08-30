@@ -1,182 +1,158 @@
-// ================= EXISTING AUTH CODE =================
-const formTitle = document.getElementById('form-title');
-const toggleLink = document.getElementById('toggle-link');
-let isLogin = true;
+// Chat functionality implementation
+let socket;
+let currentUser = '';
 
-toggleLink.addEventListener('click', () => {
-    isLogin = !isLogin;
-    formTitle.textContent = isLogin ? "Login" : "Signup";
-    toggleLink.textContent = isLogin ? "Don't have an account? Signup" : "Already have an account? Login";
-});
+// DOM elements
+const loginForm = document.getElementById('loginForm');
+const signupForm = document.getElementById('signupForm');
+const chatInterface = document.getElementById('chatInterface');
+const chatMessages = document.getElementById('chatMessages');
+const messageInput = document.getElementById('messageInput');
+const sendMessageBtn = document.getElementById('sendMessageBtn');
+const onlineCount = document.getElementById('onlineCount');
 
-document.getElementById('auth-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    alert((isLogin ? "Logging in: " : "Signing up: ") + email);
-});
-
-// ================= REGISTRATION FORM FUNCTIONALITY =================
-document.addEventListener('DOMContentLoaded', function() {
-    const registrationForm = document.querySelector('#signupForm form');
+// Initialize chat functionality
+function initializeChat(username) {
+    currentUser = username;
     
-    if (registrationForm) {
-        registrationForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (password !== confirmPassword) {
-                alert('❌ Passwords do not match!');
-                return;
-            }
-            
-            if (password.length < 6) {
-                alert('❌ Password must be at least 6 characters long');
-                return;
-            }
-            
-            try {
-                const submitBtn = registrationForm.querySelector('button');
-                submitBtn.textContent = 'Creating Account...';
-                submitBtn.disabled = true;
-                
-                const response = await fetch('http://localhost:3001/register', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    alert('✅ Account created successfully! You can now login.');
-                    registrationForm.reset();
-                    showLogin();
-                } else {
-                    alert('❌ Error: ' + result.message);
-                }
-                
-            } catch (error) {
-                alert('❌ Network error: Could not connect to server.');
-            } finally {
-                const submitBtn = registrationForm.querySelector('button');
-                submitBtn.textContent = 'Create Account';
-                submitBtn.disabled = false;
-            }
-        });
-    }
-});
+    // Hide auth forms and show chat interface
+    loginForm.style.display = 'none';
+    signupForm.style.display = 'none';
+    chatInterface.style.display = 'flex';
 
-// ================= LOGIN FORM FUNCTIONALITY =================
-document.addEventListener('DOMContentLoaded', function() {
-    const loginForm = document.querySelector('#loginForm form');
+    // Initialize Socket.io connection
+    socket = io();
     
-    if (loginForm) {
-        loginForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            try {
-                const submitBtn = loginForm.querySelector('button');
-                submitBtn.textContent = 'Logging in...';
-                submitBtn.disabled = true;
-                
-                const response = await fetch('http://localhost:3001/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    alert('✅ Login successful! Welcome back!');
-                    window.location.href = '/app.html';
-                } else {
-                    alert('❌ ' + result.message);
-                }
-                
-            } catch (error) {
-                alert('❌ Network error: Could not connect to server.');
-            } finally {
-                const submitBtn = loginForm.querySelector('button');
-                submitBtn.textContent = 'Login to Cipher';
-                submitBtn.disabled = false;
-            }
-        });
-    }
-});
+    // Emit event for WebRTC manager to initialize
+    const socketConnectedEvent = new CustomEvent('socketConnected', { detail: { socket: socket } });
+    document.dispatchEvent(socketConnectedEvent);
 
-// ================= REAL-TIME CHAT FUNCTIONALITY =================
-const socket = io();
+    // Register user with the server
+    socket.emit('register', username);
 
-function initChat() {
-    const chatHTML = `
-        <div class="chat-container">
-            <div class="chat-header">
-                <h3>💬 Live Chat</h3>
-                <span class="online-count">1 online</span>
-            </div>
-            <div class="chat-messages" id="chatMessages"></div>
-            <div class="chat-input-container">
-                <input type="text" id="chatInput" placeholder="Type a message...">
-                <button onclick="sendMessage()">Send</button>
-            </div>
-        </div>
-    `;
-    
-    document.body.innerHTML += chatHTML;
-    setupChatEvents();
-}
+    // Listen for messages
+    socket.on('message', (data) => {
+        addMessage(data.username, data.message, new Date(data.timestamp));
+    });
 
-function setupChatEvents() {
-    document.getElementById('chatInput').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendMessage();
+    // Listen for user updates
+    socket.on('updateUsers', (users) => {
+        onlineCount.textContent = `${users.length} users online`;
+    });
+
+    // Listen for user join/leave notifications
+    socket.on('userJoined', (username) => {
+        addSystemMessage(`${username} joined the chat`);
+    });
+
+    socket.on('userLeft', (username) => {
+        addSystemMessage(`${username} left the chat`);
+    });
+
+    // Listen for typing indicators
+    socket.on('userTyping', (username) => {
+        // Implement typing indicator if needed
+    });
+
+    socket.on('userStoppedTyping', () => {
+        // Implement typing indicator if needed
     });
 }
 
+// Send message functionality
+sendMessageBtn.addEventListener('click', sendMessage);
+messageInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+});
+
 function sendMessage() {
-    const input = document.getElementById('chatInput');
-    const message = input.value.trim();
-    
-    if (message) {
-        socket.emit('send-message', {
-            text: message,
-            user: 'You',
-            time: new Date().toLocaleTimeString()
-        });
-        
-        addMessageToChat(message, 'You', true);
-        input.value = '';
+    const message = messageInput.value.trim();
+    if (message && socket) {
+        socket.emit('chatMessage', { message });
+        addMessage(currentUser, message, new Date(), true);
+        messageInput.value = '';
     }
 }
 
-function addMessageToChat(text, user, isLocal = false) {
-    const chatBox = document.getElementById('chatMessages');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${isLocal ? 'local' : 'remote'}`;
-    messageDiv.innerHTML = `
-        <strong>${user}:</strong> ${text}
-        <span class="message-time">${new Date().toLocaleTimeString()}</span>
+// Add message to chat
+function addMessage(username, message, timestamp, isOwn = false) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message');
+    messageElement.classList.add(isOwn ? 'sent' : 'received');
+    
+    const timeString = timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+    messageElement.innerHTML = `
+        <strong>${isOwn ? 'You' : username}</strong>
+        <p>${message}</p>
+        <div class="message-time">${timeString}</div>
     `;
-    chatBox.appendChild(messageDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
+    
+    chatMessages.appendChild(messageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-socket.on('receive-message', (data) => {
-    addMessageToChat(data.text, data.user, false);
+// Add system message
+function addSystemMessage(message) {
+    const systemElement = document.createElement('div');
+    systemElement.classList.add('message', 'system');
+    systemElement.innerHTML = `<em>${message}</em>`;
+    systemElement.style.textAlign = 'center';
+    systemElement.style.color = '#aaa';
+    systemElement.style.fontStyle = 'italic';
+    
+    chatMessages.appendChild(systemElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+// Auth functions
+window.showSignup = function() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('signupForm').style.display = 'block';
+}
+
+window.showLogin = function() {
+    document.getElementById('signupForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'block';
+}
+
+// Login functionality
+document.getElementById('loginBtn').addEventListener('click', function() {
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    if (email && password) {
+        // For demo purposes, we'll use the email username as the display name
+        const username = email.split('@')[0];
+        initializeChat(username);
+    } else {
+        alert('Please enter both email and password.');
+    }
 });
 
-// Initialize chat when page loads
-setTimeout(initChat, 1000);
+// Signup functionality
+document.getElementById('signupBtn').addEventListener('click', function() {
+    const name = document.getElementById('signupName').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+    } else if (name && email && password) {
+        initializeChat(name);
+    } else {
+        alert('Please fill in all fields.');
+    }
+});
+
+// Remove placeholder call functionality
+document.getElementById('audioCallBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    // Actual functionality is now handled by WebRTCManager
+});
+
+document.getElementById('videoCallBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    // Actual functionality is now handled by WebRTCManager
+});
