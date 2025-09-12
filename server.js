@@ -8,7 +8,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-const PORT = 3000;
+// Use environment port for deployment or 3000 for local testing
+const PORT = process.env.PORT || 3000;
 
 // Serve static files from 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
