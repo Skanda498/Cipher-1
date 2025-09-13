@@ -10,6 +10,7 @@ const io = new Server(server);
 
 // Use environment port for deployment or 3000 for local testing
 const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0'; // important for Replit/online hosting
 
 // Serve static files from 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -41,6 +42,6 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(PORT, () => {
-    console.log(`Cipher 1 Test Server running at http://localhost:${PORT}/`);
+server.listen(PORT, HOST, () => {
+    console.log(`✅ Cipher 1 Server running at http://${HOST}:${PORT}/`);
 });
